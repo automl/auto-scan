@@ -66,7 +66,7 @@ dependencies = [
     "tensorboard>=2.0",
     "typing-extensions",
     "torchvision>=0.8.0",
-    "botorch>=0.12",
+    "botorch==0.12.0",
     "gpytorch>=1.13",
     "ifbo>=0.4.0",
 ]
