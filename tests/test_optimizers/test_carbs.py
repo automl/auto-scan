@@ -105,7 +105,10 @@ def test_state_is_rebuilt_from_the_trials(tmp_path: Path, monkeypatch) -> None:
 
 
 def test_cost_comes_from_the_cost_estimator_if_not_reported() -> None:
-    estimator = CostEstimator.from_callable(float)
+    def cost_fn(width: int) -> float:
+        return float(width)
+
+    estimator = CostEstimator.from_callable(cost_fn)
     optimizer, info = load_optimizer(
         "carbs", _space(), cost_estimator=estimator, max_cost_per_config=100.0
     )
