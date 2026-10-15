@@ -25,8 +25,8 @@ def _costs(root: Path) -> dict[str, float]:
 
 
 def test_estimated_cost_is_reported_and_spent(tmp_path: Path) -> None:
-    def evaluate_pipeline(width: int, lr: float, dataset: str) -> float:
-        return lr
+    def evaluate_pipeline(width: int, lr: float, dataset: str) -> dict:
+        return {"objective_to_minimize": lr, "cost": width}
 
     autoscan.run(
         evaluate_pipeline=evaluate_pipeline,
@@ -92,7 +92,11 @@ def test_max_cost_per_config_constrains_random_and_grid_search() -> None:
             "opt": HPOCategorical(["adam", "sgd"]),
         }
     )
-    estimator = CostEstimator.from_callable(float)
+
+    def cost_estimator(**config: dict) -> float:
+        return config["width"]
+
+    estimator = CostEstimator.from_callable(cost_estimator)
 
     random, _ = load_optimizer(
         random_search, space, cost_estimator=estimator, max_cost_per_config=20
