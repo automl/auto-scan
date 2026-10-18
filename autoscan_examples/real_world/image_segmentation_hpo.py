@@ -140,7 +140,7 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
 
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=evaluate_pipeline,
         pipeline_space=SegmentationSpace(),
         root_directory="results/hpo_image_segmentation",

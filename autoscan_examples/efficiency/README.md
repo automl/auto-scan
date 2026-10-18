@@ -1,7 +1,7 @@
 # Parallelization
 
-In order to run autoscan in parallel on multiple processes or multiple machines, simply call `autoscan.run` multiple times.
-All calls to `autoscan.run` need to use the same `root_directory` on the same filesystem to synchronize between the `autoscan.run`'s.
+In order to run autoscan in parallel on multiple processes or multiple machines, simply call `autoscan.acquire` multiple times.
+All calls to `autoscan.acquire` need to use the same `root_directory` on the same filesystem to synchronize between the `autoscan.acquire`'s.
 
 For example, start the HPO example in two shells from the same directory as below.
 

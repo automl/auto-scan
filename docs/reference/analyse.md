@@ -1,7 +1,7 @@
 # Analysing Runs
 
 Everything AutoScAn knows about a run lives on disk, in the `root_directory` you gave to
-[`autoscan.run()`][autoscan.api.run]. There are a few ways to look at it:
+[`autoscan.acquire()`][autoscan.api.acquire]. There are a few ways to look at it:
 
 !!! tip "Interactive tutorial"
 
@@ -96,7 +96,7 @@ joined up (red).
 
 Pass `live_plots=True` to have the plots
 redrawn after every evaluated trial as well. Where to pass it depends on how your
-trials are evaluated: via `autoscan.run()` or `autoscan.save_pipeline_results()` (see [the evaluate function](evaluate_pipeline.md)).
+trials are evaluated: via `autoscan.acquire()` or `autoscan.save_pipeline_results()` (see [the evaluate function](evaluate_pipeline.md)).
 
 !!! warning "Overhead"
 

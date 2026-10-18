@@ -65,7 +65,7 @@ class HPOSpace(autoscan.PipelineSpace):
 
 
 logging.basicConfig(level=logging.INFO)
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline_via_slurm,
     pipeline_space=HPOSpace(),
     root_directory="results/slurm_script_example",

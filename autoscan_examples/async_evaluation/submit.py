@@ -47,7 +47,7 @@ class ExampleSpace(autoscan.PipelineSpace):
     optimizer=autoscan.Categorical(choices=["sgd", "adam"])
     lr=autoscan.Float(lower=10e-7, upper=10e-3, log=True)
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline_via_slurm,
     pipeline_space=ExampleSpace(),
     root_directory="results/async_evaluation",

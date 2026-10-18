@@ -1,4 +1,4 @@
-"""Tests for `autoscan.run(..., live_plots=True)`."""
+"""Tests for `autoscan.acquire(..., live_plots=True)`."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ def _two_objectives(x: float) -> dict:
 
 
 def _run(root: Path, evaluate_pipeline: object, *, live_plots: bool) -> None:
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=evaluate_pipeline,  # type: ignore[arg-type]
         pipeline_space=_Space(),
         root_directory=root,

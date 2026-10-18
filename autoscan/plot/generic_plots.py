@@ -1,5 +1,5 @@
 """Plots, with the CSV of their points, saved to the summary folder by
-`autoscan.run(..., live_plots=True)`.
+`autoscan.acquire(..., live_plots=True)`.
 """
 
 from __future__ import annotations

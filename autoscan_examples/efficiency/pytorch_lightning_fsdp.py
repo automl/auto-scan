@@ -69,7 +69,7 @@ if __name__ == "__main__":
         lr = autoscan.Float(lower=0.001, upper=0.1, log=True, prior=0.01, prior_confidence="high")
         epoch = autoscan.IntegerFidelity(lower=1, upper=3)
 
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=evaluate_pipeline,
         pipeline_space=HPOSpace(),
         root_directory="results/pytorch_lightning_fsdp",

@@ -1,5 +1,6 @@
 """One AutoScAn worker of a scaling-study setting, in its own Slurm job on its own GPU.
-Calls `autoscan.run` on the setting's shared root directory for its share of the sweep.
+Calls `autoscan.acquire` on the setting's shared root directory for its share of the
+sweep.
 """
 
 from __future__ import annotations
@@ -70,7 +71,7 @@ def main():
             **config,
         )
 
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=evaluate_pipeline,
         pipeline_space=HPOSpace(),
         root_directory=args.root_dir,

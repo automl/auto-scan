@@ -118,7 +118,7 @@ class PriMOSpace(autoscan.PipelineSpace):
 logging.basicConfig(level=logging.INFO)
 
 # Run PriMO optimization
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=simulate_training,
     pipeline_space=PriMOSpace(),
     root_directory="results/primo_multi_objective",

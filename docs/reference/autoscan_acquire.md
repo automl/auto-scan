@@ -1,6 +1,6 @@
 # Configuring and Running Optimizations
 
-The [`autoscan.run()`][autoscan.api.run] function is the core interface for running Hyperparameter
+The [`autoscan.acquire()`][autoscan.api.acquire] function is the core interface for running Hyperparameter
 and/or architecture search using optimizers in AutoScAn.
 You can find most of the features AutoScAn provides through the API of this function.
 
@@ -10,7 +10,7 @@ This document breaks down the core arguments that allow users to control the opt
 
 ## Required Arguments
 To operate, AutoScAn requires at minimum the following two arguments
-[`autoscan.run(evaluate_pipeline=..., pipeline_space=...)`][autoscan.api.run]:
+[`autoscan.acquire(evaluate_pipeline=..., pipeline_space=...)`][autoscan.api.acquire]:
 
 ```python
 import autoscan
@@ -23,7 +23,7 @@ class ExamplePipeline(autoscan.PipelineSpace):
     learning_rate = autoscan.Float(1e-3, 1e-1, log=True)
     epochs = autoscan.IntegerFidelity(10, 100)
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline, # (1)!
     pipeline_space=ExamplePipeline(), # (2)!
     root_directory="path/to/result_dir" # (3)!
@@ -36,21 +36,21 @@ autoscan.run(
     It accepts a class instance inheriting from `autoscan.PipelineSpace` or a [`configSpace.ConfigurationSpace`](https://automl.github.io/ConfigSpace/) object.
     For comprehensive information and examples, please refer to the detailed guide available [here](../reference/autoscan_spaces.md)
 3.  The directory path where the information about the optimization and its progress gets stored.
-    This is also used to synchronize multiple calls to `autoscan.run()` for parallelization.
+    This is also used to synchronize multiple calls to `autoscan.acquire()` for parallelization.
 
 
 See the following for more:
 
 * What kind of [pipeline space](../reference/autoscan_spaces.md) can you define?
-* What goes in and what goes out of [`evaluate_pipeline()`](../reference/autoscan_run.md)?
+* What goes in and what goes out of [`evaluate_pipeline()`](../reference/autoscan_acquire.md)?
 
 ## Budget, how long to run?
-To define a budget, provide `total_evaluations_to_spend=` to [`autoscan.run()`][autoscan.api.run],
+To define a budget, provide `total_evaluations_to_spend=` to [`autoscan.acquire()`][autoscan.api.acquire],
 to specify the number of evaluations after which the whole study (across all workers) stops,
 and/or `total_cost_to_spend=` to specify a cost threshold for your own custom cost metric, such as time, energy, or monetary, as returned by each evaluation of the pipeline,
 and/or `total_fidelities_to_spend=` for multi-fidelity optimization, to specify the total fidelity to spend.
 
-Each of these also has a `worker_` variant (e.g. `worker_evaluations_to_spend=`) that limits only what a single `autoscan.run()` call/worker does.
+Each of these also has a `worker_` variant (e.g. `worker_evaluations_to_spend=`) that limits only what a single `autoscan.acquire()` call/worker does.
 
 
 ```python
@@ -62,7 +62,7 @@ def evaluate_pipeline(learning_rate: float, epochs: int) -> float:
     duration = end - start
     return {"objective_function_to_minimize": loss, "cost": duration}
 
-autoscan.run(
+autoscan.acquire(
     total_evaluations_to_spend=10, # (1)!
     total_cost_to_spend=1000, # (2)!
 )
@@ -77,7 +77,7 @@ autoscan.run(
 ## Scaling studies, estimating the cost of a configuration
 In a scaling study the cost of a configuration, e.g. its FLOPs, is known before it is
 evaluated, as it follows from the parameters marked with `is_compute_scaling=True`.
-Pass it as `cost_estimator=` to [`autoscan.run()`][autoscan.api.run]:
+Pass it as `cost_estimator=` to [`autoscan.acquire()`][autoscan.api.acquire]:
 
 ```python
 class Space(autoscan.PipelineSpace):
@@ -88,7 +88,7 @@ class Space(autoscan.PipelineSpace):
 def estimate_flops(width: int, layers: int) -> float:  # (1)!
     return ...
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     pipeline_space=Space(),
     cost_estimator=estimate_flops,
@@ -116,7 +116,7 @@ be given as a JSON file, with one record for every combination of them:
 ```
 
 ```python
-autoscan.run(..., cost_estimator="costs.json")
+autoscan.acquire(..., cost_estimator="costs.json")
 ```
 
 The optimizers that make use of the cost estimate are the
@@ -139,7 +139,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-autoscan.run(...)
+autoscan.acquire(...)
 ```
 
 Please refer to Python's [logging documentation](https://docs.python.org/3/library/logging.html) for more information on how to customize the logging output.
@@ -150,7 +150,7 @@ every evaluated trial: the incumbent trajectory, or the Pareto front for two obj
 plus anything your optimizer provides.
 
 ```python
-autoscan.run(..., live_plots=True)
+autoscan.acquire(..., live_plots=True)
 ```
 
 It is off by default, since every refresh redraws the figures. You can always get the same
@@ -158,7 +158,7 @@ plots later with
 `autoscan.analyze(root_directory)`. See [Analysing Runs](analyse.md#plots-and-reports-autoscananalyze).
 
 ## Continuing Runs
-To continue a run, all you need to do is provide the same `root_directory=` to [`autoscan.run()`][autoscan.api.run] as before,
+To continue a run, all you need to do is provide the same `root_directory=` to [`autoscan.acquire()`][autoscan.api.acquire] as before,
 and specify a new stopping criterria(e.g. through `total_evaluations_to_spend=` and/or `total_cost_to_spend=`).
 
 ```python
@@ -170,7 +170,7 @@ def run(learning_rate: float, epochs: int) -> float:
     duration = end - start
     return {"objective_to_minimize": loss, "cost": duration}
 
-autoscan.run(
+autoscan.acquire(
     # enable stoping criteria by specifying new number of evaluation desired.
     total_evaluations_to_spend=50,
 )
@@ -201,14 +201,14 @@ print(f"Original optimizer: {optimizer_info['name']}")
 print(f"Original search space: {pipeline_space}")
 
 # Option 1: Continue the original run (auto-loads everything)
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=my_function,
     root_directory=root_dir,
     total_evaluations_to_spend=10,  # adjusted new budget
 )
 
 # Option 2: Start a new run with the same settings
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=my_function,
     pipeline_space=pipeline_space,
     root_directory="path/to/new_run",
@@ -224,10 +224,10 @@ For details on:
 
 ## Overwriting a Run
 
-To overwrite a run, simply provide the same `root_directory=` to [`autoscan.run()`][autoscan.api.run] as before, with the `overwrite_root_directory=True` argument.
+To overwrite a run, simply provide the same `root_directory=` to [`autoscan.acquire()`][autoscan.api.acquire] as before, with the `overwrite_root_directory=True` argument.
 
 ```python
-autoscan.run(
+autoscan.acquire(
     ...,
     root_directory="path/to/previous_result_dir",
     overwrite_root_directory=True,
@@ -240,7 +240,7 @@ autoscan.run(
 
 ## Getting the results
 The results of the optimization process are stored in the `root_directory=`
-provided to [`autoscan.run()`][autoscan.api.run].
+provided to [`autoscan.acquire()`][autoscan.api.acquire].
 
 === "Result Directory"
 
@@ -272,7 +272,7 @@ training loop. For more information, please refer to the [analyses page](analyse
 ## Parallelization
 
 AutoScAn utilizes the file-system and locks as a means of communication for implementing parallelization and resuming runs.
-As a result, you can start multiple [`autoscan.run()`][autoscan.api.run] from different processes however you like
+As a result, you can start multiple [`autoscan.acquire()`][autoscan.api.acquire] from different processes however you like
 and they will synchronize, **as long as they share the same `root_directory=`**.
 Any new workers that come online will automatically pick up work and work together to until the budget is exhausted.
 
@@ -284,7 +284,7 @@ Any new workers that come online will automatically pick up work and work togeth
 
     ```python
     # worker.py
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=...,
         pipeline_space=...,
         root_directory="some/path",
@@ -294,7 +294,7 @@ Any new workers that come online will automatically pick up work and work togeth
     )
     ```
 
-    1.  Limits the number of evaluations for this specific call of [`autoscan.run()`][autoscan.api.run].
+    1.  Limits the number of evaluations for this specific call of [`autoscan.acquire()`][autoscan.api.acquire].
     2.  Evaluations in-progress count towards worker_evaluations_to_spend, halting new ones when this limit is reached.
         Setting this to `True` enables continuous sampling of new evaluations until the total of completed ones meets worker_evaluations_to_spend, optimizing resource use in time-sensitive scenarios.
 
@@ -330,7 +330,7 @@ def run(learning_rate: float, epochs: int) -> float:
     ...
     return loss
 
-autoscan.run(
+autoscan.acquire(
     ignore_errors=True, # (1)!
 )
 ```
@@ -368,7 +368,7 @@ Once cleaned, you can restart the optimization and workers will pick up from the
 For more details on the clean command, see the [Cleaning Up Trials documentation](./clean.md).
 
 ## Selecting an Optimizer
-By default AutoScAn intelligently selects the most appropriate optimizer based on your defined configurations in `pipeline_space=`, one of the arguments to [`autoscan.run()`][autoscan.api.run].
+By default AutoScAn intelligently selects the most appropriate optimizer based on your defined configurations in `pipeline_space=`, one of the arguments to [`autoscan.acquire()`][autoscan.api.acquire].
 
 The characteristics of your search space, as represented in the `pipeline_space=`, play a crucial role in determining which optimizer AutoScAn will choose.
 This automatic selection process ensures that the optimizer aligns with the specific requirements and nuances of your search space, thereby optimizing the effectiveness of the hyperparameter and/or architecture optimization.

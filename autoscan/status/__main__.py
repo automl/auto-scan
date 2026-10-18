@@ -1,11 +1,11 @@
-"""Displays status information about a working directory of an autoscan.run.
+"""Displays status information about a working directory of an autoscan.acquire.
 
 Usage:
     python -m autoscan.status [-h] [--best_objective_to_minimizees] [--best_configs]
         [--all_configs] working_directory
 
 Positional arguments:
-    working_directory  The working directory given to autoscan.run
+    working_directory  The working directory given to autoscan.acquire
 
 Optional arguments:
     -h, --help         show this help message and exit
@@ -34,10 +34,10 @@ from .status import status
 parser = argparse.ArgumentParser(
     prog="python -m autoscan.status",
     description="Displays status information about a working directory of an "
-    "autoscan.run",
+    "autoscan.acquire",
 )
 parser.add_argument("root_directory", type=Path,
-                    help="The working directory given to autoscan.run")
+                    help="The working directory given to autoscan.acquire")
 args = parser.parse_args()
 
 logging.basicConfig(level=logging.WARN)

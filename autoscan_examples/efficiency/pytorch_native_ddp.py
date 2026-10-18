@@ -121,7 +121,7 @@ class HPOSpace(autoscan.PipelineSpace):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=evaluate_pipeline,
         pipeline_space=HPOSpace(),
         root_directory="results/pytorch_ddp",

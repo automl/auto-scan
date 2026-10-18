@@ -226,7 +226,7 @@ def evaluate_conditional_pipeline(pipeline: dict) -> float:
 
 
 conditional_space = ConditionalPipelineSpace()
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_conditional_pipeline,
     pipeline_space=conditional_space,
     root_directory="conditional_search_space_example/",

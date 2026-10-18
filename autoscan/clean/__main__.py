@@ -10,7 +10,7 @@ Usage:
 
 Optional arguments:
     -h, --help           show this help message and exit
-    --root-dir ROOT_DIR  The working directory given to autoscan.run
+    --root-dir ROOT_DIR  The working directory given to autoscan.acquire
                          (default: autoscan_results)
     --trial-ids          Only clean specific trial IDs (space-separated list)
     --dry-run            Show what would change without making changes
@@ -43,7 +43,7 @@ parser.add_argument(
     dest="root_directory",
     type=Path,
     default=Path("autoscan_results"),
-    help="The working directory given to autoscan.run (default: autoscan_results)",
+    help="The working directory given to autoscan.acquire (default: autoscan_results)",
 )
 parser.add_argument(
     "--trial-ids",

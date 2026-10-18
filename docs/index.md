@@ -52,7 +52,7 @@ Using `autoscan` is based on the following pattern:
 
 1. Define an `evaluate_pipeline` function that evaluates a configuration of your pipeline.
 1. Define a `pipeline_space` of the parameters to optimize.
-1. Call `autoscan.run(evaluate_pipeline, pipeline_space)`.
+1. Call `autoscan.acquire(evaluate_pipeline, pipeline_space)`.
 1. Optionally, pass a `cost_estimator` and a cost budget to constrain the search by cost.
 
 In code, the usage pattern can look like this:
@@ -94,7 +94,7 @@ def estimate_flops(width: int) -> float:
 
 
 # 3. Run the AutoScAn optimization
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     pipeline_space=ExampleSpace(),
     root_directory="path/to/save/results",  # Replace with the actual path.
@@ -133,7 +133,7 @@ To run them locally instead, see the [tutorials folder](https://github.com/autom
 ### Documentation
 
 - [Getting started](getting_started.md)
-- [Reference](reference/autoscan_run.md): running AutoScAn, search spaces, optimizers, and analysing runs
+- [Reference](reference/autoscan_acquire.md): running AutoScAn, search spaces, optimizers, and analysing runs
 - [Scaling optimizers](reference/optimizers.md#3-scaling-optimizers): cost-constrained search guided by scaling laws
 - [Algorithms](reference/search_algorithms/landing_page_algo.md)
 - [API](api/autoscan/api.md)

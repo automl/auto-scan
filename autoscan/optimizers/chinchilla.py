@@ -1,8 +1,8 @@
 """Chinchilla guided scaling, see https://arxiv.org/abs/2203.15556.
 
 The configurations to evaluate are laid out once, on the first ask, from the
-`cost_estimator`, `max_cost_per_config` and cost budget given to `autoscan.run()`. They
-are then evaluated in order, like a grid search.
+`cost_estimator`, `max_cost_per_config` and cost budget given to
+`autoscan.acquire()`. They are then evaluated in order, like a grid search.
 """
 
 from __future__ import annotations
@@ -209,7 +209,7 @@ class ChinchillaGuidedScaling(ScalingOptimizer):
 
         if self.cost_estimator is None:
             raise ValueError(
-                "Chinchilla needs a `cost_estimator` to be given to `autoscan.run()`."
+                "Chinchilla needs a `cost_estimator` to be given to `autoscan.acquire()`."
             )
         budget = None
         if budget_info is not None:
@@ -219,7 +219,7 @@ class ChinchillaGuidedScaling(ScalingOptimizer):
         if budget is None:
             raise ValueError(
                 "Chinchilla needs a cost budget, pass `total_cost_to_spend` or"
-                " `worker_cost_to_spend` to `autoscan.run()`."
+                " `worker_cost_to_spend` to `autoscan.acquire()`."
             )
 
         self.max_evaluation_flops = budget

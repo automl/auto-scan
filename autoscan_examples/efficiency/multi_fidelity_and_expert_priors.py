@@ -36,7 +36,7 @@ class HPOSpace(autoscan.PipelineSpace):
 
 
 logging.basicConfig(level=logging.INFO)
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     pipeline_space=HPOSpace(),
     root_directory="results/multifidelity_priors",

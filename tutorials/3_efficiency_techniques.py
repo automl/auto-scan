@@ -114,7 +114,7 @@ class MultiFidelitySpace(autoscan.PipelineSpace):
 
 # ### Run Multi-Fidelity Optimization
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_multi_fidelity/",
     pipeline_space=MultiFidelitySpace(),
@@ -163,7 +163,7 @@ class ExpertPriorSpace(autoscan.PipelineSpace):
 
 # ### Run Optimization with Priors
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_with_priors/",
     pipeline_space=ExpertPriorSpace(),
@@ -196,7 +196,7 @@ for algo in ["successive_halving", "asha", "hyperband", "async_hb", "ifbo", "pri
     print(f"\n{algo} hyperparameters:")
     print(extract_keyword_defaults(PredefinedOptimizers[algo]))
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_custom_optimizer/",
     pipeline_space=MultiFidelitySpace(),
@@ -213,7 +213,7 @@ autoscan.run(
 # ### Single Process Example (Sequential)
 
 # Sequential run
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_sequential/",
     pipeline_space=ExpertPriorSpace(),
@@ -227,11 +227,11 @@ print("Sequential run complete")
 
 # ### Parallel Execution Pattern
 
-# To parallelize, run multiple `autoscan.run()` calls with the same `root_directory`:
+# To parallelize, run multiple `autoscan.acquire()` calls with the same `root_directory`:
 
 import multiprocessing as mp
 def run_worker():
-    autoscan.run(
+    autoscan.acquire(
         evaluate_pipeline=evaluate_pipeline,
         root_directory="results_parallel/",
         pipeline_space=ExpertPriorSpace(),
@@ -282,7 +282,7 @@ class CombinedSearchSpace(autoscan.PipelineSpace):
 
 start_time = time.time()
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_combined/",
     pipeline_space=CombinedSearchSpace(),

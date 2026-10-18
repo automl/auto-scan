@@ -38,19 +38,19 @@ pip install auto-scan
         return loss
     ```
 
-1. **Execute with [`autoscan.run()`](reference/autoscan_run.md)**:
+1. **Execute with [`autoscan.acquire()`](reference/autoscan_acquire.md)**:
 
     ```python
-    autoscan.run(evaluate_pipeline, ExampleSpace(), live_plots=True)
+    autoscan.acquire(evaluate_pipeline, ExampleSpace(), live_plots=True)
     ```
 
 ---
 
 ## What's Next?
 
-The [reference](reference/autoscan_run.md) section provides detailed information on the individual components of AutoScAn.
+The [reference](reference/autoscan_acquire.md) section provides detailed information on the individual components of AutoScAn.
 
-1. How to use the [**`autoscan.run()`** function](reference/autoscan_run.md) to start the optimization process.
+1. How to use the [**`autoscan.acquire()`** function](reference/autoscan_acquire.md) to start the optimization process.
 2. The different [search space](reference/autoscan_spaces.md) options available.
 3. How to choose and configure the [optimizer](reference/optimizers.md) used.
 4. How to define the [`evaluate_pipeline()` function](reference/evaluate_pipeline.md).

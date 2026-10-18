@@ -155,7 +155,7 @@ if __name__ == "__main__":
         weight_decay = autoscan.Float(1e-5, 0.1, log=True)
         epochs = autoscan.IntegerFidelity(1, 10)
 
-    autoscan.run(
+    autoscan.acquire(
         pipeline_space=ModelSpace(),
         evaluate_pipeline=training_pipeline,
         optimizer="ifbo",

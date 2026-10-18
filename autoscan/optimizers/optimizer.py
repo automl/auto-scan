@@ -15,10 +15,10 @@ class MyOpt:
         n: int | None = None,
     ) -> SampledConfig | list[SampledConfig]: ...
 
-autoscan.run(..., optimizer=MyOpt)
+autoscan.acquire(..., optimizer=MyOpt)
 
 # Or with optimizer hyperparameters
-autoscan.run(..., optimizer=(MyOpt, {"a": 1, "b": 2}))
+autoscan.acquire(..., optimizer=(MyOpt, {"a": 1, "b": 2}))
 ```
 """
 
@@ -160,7 +160,7 @@ class AskFunction(Protocol):
         Note:
             This method is optional. Optimizers that don't need to persist artifacts
             should return None (the default behavior). The runtime only calls it,
-            after every evaluated trial, when running `autoscan.run(...,
+            after every evaluated trial, when running `autoscan.acquire(...,
             live_plots=True)`.
 
         Example:
@@ -187,7 +187,7 @@ class AskFunction(Protocol):
 class ScalingOptimizer:
     """Base class for optimizers that are ScAn native.
 
-    `autoscan.run(..., cost_estimator=..., max_cost_per_config=...)` hands both to
+    `autoscan.acquire(..., cost_estimator=..., max_cost_per_config=...)` hands both to
     every optimizer inheriting from this class, right after it was created.
 
     ```python
@@ -211,7 +211,7 @@ class ScalingOptimizer:
         *,
         max_cost_per_config: float | None = None,
     ) -> None:
-        """Called by `autoscan.run()` with the cost estimator of the run."""
+        """Called by `autoscan.acquire()` with the cost estimator of the run."""
         self.cost_estimator = cost_estimator
         self.max_cost_per_config = max_cost_per_config
 

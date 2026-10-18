@@ -53,7 +53,7 @@ class BraninSpace(autoscan.PipelineSpace):
 
 from tutorials.utils import set_seeds
 set_seeds(1)
-autoscan.run(
+autoscan.acquire(
     pipeline_space=BraninSpace(),
     root_directory="branin_demo/",
     worker_evaluations_to_spend=25,
@@ -74,7 +74,7 @@ Image(filename='./branin_demo/summary/incumbent_trajectory.png')
 # The AutoScAn workflow always follows this pattern:
 # 1. **Define** an objective function
 # 2. **Specify** a search space
-# 3. **Call** `autoscan.run()` to optimize
+# 3. **Call** `autoscan.acquire()` to optimize
 
 # ## Example 2: Deep Learning HPO
 # Now we optimize hyperparameters for a neural network on MNIST (multi-class classification with CNNs).
@@ -130,7 +130,7 @@ pipeline_space = HPODemoSpace()
 # Step 3: Run optimization
 logging.basicConfig(level=logging.INFO, force=True)
 set_seeds(1)
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_hpo_demo",
     pipeline_space=pipeline_space,
@@ -186,7 +186,7 @@ class DemoSpace(autoscan.PipelineSpace):
 pipeline_space = DemoSpace()
 
 set_seeds(1)
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_hpo",
     pipeline_space=pipeline_space,
@@ -196,7 +196,7 @@ autoscan.run(
 !python -m autoscan.status results_hpo/
 
 # ## Key Takeaways
-# 1. **AutoScAn Pattern**: Define function → Define space → Call `autoscan.run()`
+# 1. **AutoScAn Pattern**: Define function → Define space → Call `autoscan.acquire()`
 # 2. **search space Types**: `Float`, `Integer`, `Categorical` parameters
 # 3. **Optimization Output**: Tracked in `root_directory` with easy analysis tools
 # 4. **Scalability**: Same API works for complex deep learning tasks

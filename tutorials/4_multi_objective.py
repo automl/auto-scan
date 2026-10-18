@@ -136,7 +136,7 @@ def build_primo_optimizer(prior_points: dict):
 
 # ### Run PriMO
 
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline,
     root_directory="results_primo/",
     pipeline_space=ZDT1FidelitySpace(),

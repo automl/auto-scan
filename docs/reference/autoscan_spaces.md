@@ -28,16 +28,16 @@ class MySpace(autoscan.PipelineSpace):
 
 !!! info "Using **AutoScAn Spaces**"
 
-    To search a **AutoScAn space**, pass it as the `pipeline_space` argument to the `autoscan.run()` function:
+    To search a **AutoScAn space**, pass it as the `pipeline_space` argument to the `autoscan.acquire()` function:
 
     ```python
-    autoscan.run(
+    autoscan.acquire(
         ...,
         pipeline_space=MySpace()
     )
     ```
 
-    For more details on how to use the `autoscan.run()` function, see the [AutoScAn Run Reference](../reference/autoscan_run.md).
+    For more details on how to use the `autoscan.acquire()` function, see the [AutoScAn Run Reference](../reference/autoscan_acquire.md).
 
 ### Using cheap approximation, providing a [**Fidelity**](../reference/search_algorithms/landing_page_algo.md#what-is-multi-fidelity-optimization) Parameter
 
@@ -247,8 +247,8 @@ pipeline_space = autoscan.load_pipeline_space("Path/to/autoscan_folder")
 
 !!! note "Auto-loading"
 
-    In most cases, you don't need to call `load_pipeline_space()` explicitly. When continuing a run, `autoscan.run()` automatically loads the search space from disk. See [Continuing Runs](autoscan_run.md#continuing-runs) for more details.
+    In most cases, you don't need to call `load_pipeline_space()` explicitly. When continuing a run, `autoscan.acquire()` automatically loads the search space from disk. See [Continuing Runs](autoscan_acquire.md#continuing-runs) for more details.
 
 !!! tip "Reconstructing a Run"
 
-    You can load both the search space and optimizer information to fully reconstruct a previous run. See [Reconstructing and Reproducing Runs](autoscan_run.md#reconstructing-and-reproducing-runs) for a complete example.
+    You can load both the search space and optimizer information to fully reconstruct a previous run. See [Reconstructing and Reproducing Runs](autoscan_acquire.md#reconstructing-and-reproducing-runs) for a complete example.

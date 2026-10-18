@@ -28,7 +28,7 @@ autoscan.import_trials(
 )
 
 # Continue optimization with Bayesian optimization
-autoscan.run(
+autoscan.acquire(
     evaluate_pipeline=evaluate_pipeline, # need to define evaluate pipeline
     pipeline_space=my_pipeline_space, # need to define pipeline space
     root_directory="bayesian_study",

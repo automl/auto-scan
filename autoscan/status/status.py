@@ -331,7 +331,7 @@ def status(
     """Print status information of an autoscan run and return results.
 
     Args:
-        root_directory: The root directory given to autoscan.run.
+        root_directory: The root directory given to autoscan.acquire.
         print_summary: If true, print a summary of the current run state.
 
     Returns:

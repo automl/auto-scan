@@ -28,13 +28,13 @@ def simple_evaluation(x: float, y: int) -> float:
     return x + y
 
 
-def test_basic_autoscan_run():
+def test_basic_autoscan_acquire():
     """Test that basic AutoScAn run functionality works."""
     with tempfile.TemporaryDirectory() as tmp_dir:
         root_directory = Path(tmp_dir) / "basic_test"
 
         # Run optimization
-        autoscan.run(
+        autoscan.acquire(
             evaluate_pipeline=simple_evaluation,
             pipeline_space=SimpleSpace(),
             optimizer=algorithms.autoscan_random_search,
@@ -64,7 +64,7 @@ def test_autoscan_optimization_with_dict_return():
         root_directory = Path(tmp_dir) / "dict_test"
 
         # Run optimization
-        autoscan.run(
+        autoscan.acquire(
             evaluate_pipeline=dict_evaluation,
             pipeline_space=SimpleSpace(),
             optimizer=algorithms.autoscan_random_search,
@@ -89,7 +89,7 @@ def test_different_autoscan_optimizers():
             root_directory = Path(tmp_dir) / f"optimizer_{optimizer.__name__}"
 
             # Run optimization
-            autoscan.run(
+            autoscan.acquire(
                 evaluate_pipeline=simple_evaluation,
                 pipeline_space=SimpleSpace(),
                 optimizer=optimizer,
@@ -108,7 +108,7 @@ def test_autoscan_status_functionality():
         root_directory = Path(tmp_dir) / "status_test"
 
         # Run optimization
-        autoscan.run(
+        autoscan.acquire(
             evaluate_pipeline=simple_evaluation,
             pipeline_space=SimpleSpace(),
             optimizer=algorithms.autoscan_random_search,
@@ -138,7 +138,7 @@ def test_evaluation_results_are_recorded():
         root_directory = Path(tmp_dir) / "tracking_test"
 
         # Run optimization
-        autoscan.run(
+        autoscan.acquire(
             evaluate_pipeline=tracking_evaluation,
             pipeline_space=SimpleSpace(),
             optimizer=algorithms.autoscan_random_search,
