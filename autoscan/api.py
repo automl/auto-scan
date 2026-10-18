@@ -22,7 +22,6 @@ from autoscan.optimizers import (
 from autoscan.optimizers.algorithms import PredefinedOptimizers
 from autoscan.runtime import _launch_runtime, _save_results
 from autoscan.space.autoscan_spaces.autoscan_space import (
-    adjust_evaluation_pipeline_for_autoscan_space,
     check_autoscan_space_compatibility,
     convert_autoscan_to_classic_search_space,
     convert_classic_to_autoscan_search_space,
